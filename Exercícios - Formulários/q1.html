@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="q1.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Sistema Meu IFMG</h1>
+    <p>Entre com os dados para acessar o sistema.</p>
+    <form>
+      <div>
+        <label for="email">Usuário (seu e-mail)</label>
+        <input type="email" id="emailInput" name="emailInput"><br>
+        <label for="password">Senha</label>
+        <input type="password" id="passwordInput" name="passwordInput"><br>
+      </div>
+      <div class="flexButtons">
+        <input id="loginButton" type="submit" value="Entrar">
+        <input id="resetButton" type="reset" value="Limpar">
+      </div>
+    </form>
+  </div>
+  <div id="verde" />
+</body>
+<style>
+  body {
+    border: 3px solid black;
+    width: 700px;
+    height: 500px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #ffffff;
+    font-family: Roboto, sans-serif;
+  }
+
+  h1,
+  p,
+  form,
+  label,
+  input {
+    margin: 0;
+    padding: 0;
+  }
+
+
+  .container {
+    width: 90%;
+    height: 100%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70%;
+  }
+
+  .flexButtons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .flexButtons input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.15);
+    background-size: 300%;
+  }
+
+
+  .flexButtons #loginButton {
+    background-image: linear-gradient(75deg, #631CD0, #2C6DF8, #3eb1bb, #2baa6d);
+    transition: background-position transform 300ms ease-in-out;
+    background-position: left;
+  }
+
+  .flexButtons #loginButton:hover {
+    background-position: right;
+    transform: scale(1.1);
+  }
+
+  .flexButtons #resetButton {
+    background-color: grey;
+  }
+
+  #verde {
+    width: 10%;
+    height: auto;
+    background-color: #8BC34A;
+  }
+</style>
+
+</html>
