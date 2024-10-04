@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="q1.css">
-  <title>Document</title>
+  <title>Entrar no IFMG</title>
 </head>
 
 <body>
@@ -13,11 +13,15 @@
     <h1>Sistema Meu IFMG</h1>
     <p>Entre com os dados para acessar o sistema.</p>
     <form>
-      <div>
-        <label for="email">Usuário (seu e-mail)</label>
-        <input type="email" id="emailInput" name="emailInput"><br>
-        <label for="password">Senha</label>
-        <input type="password" id="passwordInput" name="passwordInput"><br>
+      <div id="divInputs">
+        <div class="eachInput">
+          <label for="email">Usuário (seu e-mail)</label>
+          <input type="email" id="emailInput" name="emailInput">
+        </div>
+        <div class="eachInput">
+          <label for="password">Senha</label>
+          <input type="password" id="passwordInput" name="passwordInput">
+        </div>
       </div>
       <div class="flexButtons">
         <input id="loginButton" type="submit" value="Entrar">
@@ -25,13 +29,24 @@
       </div>
     </form>
   </div>
-  <div id="verde" />
+  <div id="verde"></div>
 </body>
+
 <style>
+  button,
+  input,
+  optgroup,
+  select {
+    background-image: none;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+
   body {
-    border: 3px solid black;
     width: 700px;
-    height: 500px;
+    height: 400px;
     margin: 0;
     padding: 0;
     display: flex;
@@ -48,10 +63,34 @@
     padding: 0;
   }
 
+  #divInputs {
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+  }
+
+  #divInputs input {
+    height: 40px;
+    width: 220px;
+    border-radius: 6px;
+    border: 2px solid #bbbbbb;
+    box-shadow: inset 0px 0px 2px 2px rgba(0, 0, 0, 0.05);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #divInputs input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+    outline: none;
+  }
+
 
   .container {
     width: 90%;
     height: 100%;
+    padding: 50px;
   }
 
   form {
@@ -66,27 +105,28 @@
     gap: 10px;
   }
 
+  #divInputs input:focus-visible {
+    border: 3px solid #75d6ff;
+    outline: none;
+  }
+
   .flexButtons input {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    color: white;
+    padding: 10px 20px;
     border-radius: 5px;
     border: none;
     box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.15);
     background-size: 300%;
   }
 
-
   .flexButtons #loginButton {
     background-image: linear-gradient(75deg, #631CD0, #2C6DF8, #3eb1bb, #2baa6d);
-    transition: background-position transform 300ms ease-in-out;
+    transition: background-position 300ms ease-in-out;
     background-position: left;
   }
 
   .flexButtons #loginButton:hover {
     background-position: right;
-    transform: scale(1.1);
   }
 
   .flexButtons #resetButton {

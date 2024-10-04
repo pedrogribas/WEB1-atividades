@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercício de Mudança de Cores</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Ek Mukta';
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 4px;
+    }
+
+    h1 {
+      margin-top: 10vh;
+      font-size: 2.5rem;
+      max-width: 500px;
+      letter-spacing: 3px;
+      text-align: center;
+      line-height: 1.5;
+      font-family: 'Open Sans';
+      text-transform: capitalize;
+      font-weight: 800;
+      color: white;
+    }
+
+    h1 span {
+      color: #0010f1;
+    }
+
+    form {
+      position: relative;
+      width: 25rem;
+      margin-top: 12vh;
+    }
+
+    @media screen and (max-width: 768px) {
+      form {
+        width: 90%;
+      }
+    }
+
+    .chosen-value,
+    .value-list {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .chosen-value {
+      font-family: 'Ek Mukta';
+      text-transform: uppercase;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+      font-weight: 600;
+      letter-spacing: 4px;
+      height: 4rem;
+      font-size: 1.1rem;
+      padding: 1rem;
+      background-color: #FAFCFD;
+      border: 3px solid transparent;
+      box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+      transition: 0.3s ease-in-out;
+    }
+
+    .chosen-value:hover {
+      background-color: #b6b6b6;
+      cursor: pointer;
+    }
+
+    .chosen-value:focus,
+    .chosen-value.open {
+      box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+      outline: 0;
+      background-color: #b6b6b6;
+      color: #000;
+    }
+
+    .value-list {
+      list-style: none;
+      margin-top: 4rem;
+      box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      max-height: 0;
+      transition: 0.3s ease-in-out;
+    }
+
+    .value-list.open {
+      max-height: 320px;
+      overflow: auto;
+    }
+
+    .value-list li {
+      position: relative;
+      height: 4rem;
+      background-color: #FAFCFD;
+      padding: 1rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      opacity: 1;
+    }
+
+    .value-list li.closed {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0;
+      opacity: 0;
+    }
+
+    .value-list li:hover {
+      color: white;
+    }
+
+    .value-list li:nth-child(1):hover {
+      color: black;
+      background-color: yellow;
+    }
+
+    .value-list li:nth-child(2):hover {
+      color: black;
+      background-color: lightyellow;
+    }
+
+    .value-list li:nth-child(3):hover {
+      background-color: rgb(242, 174, 27);
+    }
+
+    .value-list li:nth-child(4):hover {
+      color: black;
+      background-color: aquamarine;
+    }
+
+    .value-list li:nth-child(5):hover {
+      background-color: blue;
+    }
+
+    .value-list li:nth-child(6):hover {
+      color: black;
+      background-color: skyblue;
+    }
+
+    .value-list li:nth-child(7):hover {
+      color: black;
+      background-color: lightblue;
+    }
+
+    .value-list li:nth-child(8):hover {
+      background-color: darkblue;
+    }
+
+    .value-list li:nth-child(9):hover {
+      background-color: royalblue;
+    }
+
+    .value-list li:nth-child(10):hover {
+      color: black;
+      background-color: beige;
+    }
+
+    .value-list li:nth-child(11):hover {
+      color: black;
+      background-color: white;
+      color: black;
+    }
+
+    .value-list li:nth-child(12):hover {
+      background-color: chartreuse;
+    }
+
+    .value-list li:nth-child(13):hover {
+      background-color: chocolate;
+    }
+
+    .value-list li:nth-child(14):hover {
+      background-color: cyan;
+    }
+
+    .value-list li:nth-child(15):hover {
+      background-color: coral;
+    }
+
+    .value-list li:nth-child(16):hover {
+      background-color: gray;
+    }
+
+    .value-list li:nth-child(17):hover {
+      background-color: gold;
+    }
+
+    .value-list li:nth-child(18):hover {
+      color: black;
+      background-color: rgb(64, 251, 170);
+    }
+
+    .value-list li:nth-child(19):hover {
+      color: black;
+      background-color: lavender;
+    }
+
+    .value-list li:nth-child(20):hover {
+      background-color: orange;
+    }
+
+    .value-list li:nth-child(21):hover {
+      background-color: darkorange;
+    }
+
+    .value-list li:nth-child(22):hover {
+      color: black;
+      background-color: lime;
+    }
+
+    .value-list li:nth-child(23):hover {
+      background-color: rgb(124, 237, 67);
+    }
+
+    .value-list li:nth-child(24):hover {
+      background-color: magenta;
+    }
+
+    .value-list li:nth-child(25):hover {
+      color: black;
+      background-color: ivory;
+    }
+
+    .value-list li:nth-child(26):hover {
+      background-color: brown;
+    }
+
+    .value-list li:nth-child(27):hover {
+      color: black;
+      background-color: orchid;
+    }
+
+    .value-list li:nth-child(28):hover {
+      background-color: black;
+    }
+
+    .value-list li:nth-child(29):hover {
+      color: black;
+      background-color: silver;
+    }
+
+    .value-list li:nth-child(30):hover {
+      color: black;
+      background-color: pink;
+    }
+
+    .value-list li:nth-child(31):hover {
+      background-color: hotpink;
+    }
+
+    .value-list li:nth-child(32):hover {
+      color: black;
+      background-color: lightpink;
+    }
+
+    .value-list li:nth-child(33):hover {
+      background-color: purple;
+    }
+
+    .value-list li:nth-child(34):hover {
+      background-color: rgb(77, 10, 77);
+    }
+
+    .value-list li:nth-child(35):hover {
+      color: black;
+      background-color: salmon;
+    }
+
+    .value-list li:nth-child(36):hover {
+      color: black;
+      background-color: tomato;
+    }
+
+    .value-list li:nth-child(37):hover {
+      color: black;
+      background-color: turquoise;
+    }
+
+    .value-list li:nth-child(38):hover {
+      background-color: green;
+    }
+
+    .value-list li:nth-child(39):hover {
+      color: black;
+      background-color: lightgreen;
+    }
+
+    .value-list li:nth-child(40):hover {
+      background-color: darkgreen;
+    }
+
+    .value-list li:nth-child(41):hover {
+      background-color: seagreen;
+    }
+
+    .value-list li:nth-child(42):hover {
+      color: black;
+      background-color: rgb(75, 249, 188);
+    }
+
+    .value-list li:nth-child(43):hover {
+      background-color: olive;
+    }
+
+    .value-list li:nth-child(44):hover {
+      background-color: red;
+    }
+
+    .value-list li:nth-child(45):hover {
+      color: black;
+      background-color: rgb(238, 112, 112);
+    }
+
+    .value-list li:nth-child(46):hover {
+      background-color: darkred;
+    }
+
+    .value-list li:nth-child(47):hover {
+      background-color: rgb(194, 0, 0);
+    }
+
+    .value-list li:nth-child(48):hover {
+      background-color: rgb(128, 0, 70);
+    }
+
+    .value-list li:nth-child(49):hover {
+      color: black;
+      background-color: violet;
+    }
+
+    .value-list li:nth-child(50):hover {
+      background-color: indigo;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <input class="chosen-value" type="text" value="" placeholder="Digite para filtrar" />
+    <ul class="value-list">
+      <li>Amarelo</li>
+      <li>Amarelo Claro</li>
+      <li>Âmbar</li>
+      <li>Aquamarine</li>
+      <li>Azul</li>
+      <li>Azul Céu</li>
+      <li>Azul Claro</li>
+      <li>Azul Escuro</li>
+      <li>Azul Royal</li>
+      <li>Bege</li>
+      <li>Branco</li>
+      <li>Chartreuse</li>
+      <li>Chocolate</li>
+      <li>Ciano</li>
+      <li>Coral</li>
+      <li>Cinza</li>
+      <li>Dourado</li>
+      <li>Esmeralda</li>
+      <li>Lavanda</li>
+      <li>Laranja</li>
+      <li>Laranja Escuro</li>
+      <li>Lima</li>
+      <li>Limão</li>
+      <li>Magenta</li>
+      <li>Marfim</li>
+      <li>Marrom</li>
+      <li>Orquídea</li>
+      <li>Preto</li>
+      <li>Prateado</li>
+      <li>Rosa</li>
+      <li>Rosa Choque</li>
+      <li>Rosa Claro</li>
+      <li>Roxo</li>
+      <li>Roxo Escuro</li>
+      <li>Salmão</li>
+      <li>Tomate</li>
+      <li>Turquesa</li>
+      <li>Verde</li>
+      <li>Verde Claro</li>
+      <li>Verde Escuro</li>
+      <li>Verde Mar</li>
+      <li>Verde Neve</li>
+      <li>Verde Oliva</li>
+      <li>Vermelho</li>
+      <li>Vermelho Claro</li>
+      <li>Vermelho Escuro</li>
+      <li>Vermelho Ferrari</li>
+      <li>Vinho</li>
+      <li>Violeta</li>
+      <li>Índigo</li>
+    </ul>
+
+    <script>
+      const inputField = document.querySelector('.chosen-value');
+      const dropdown = document.querySelector('.value-list');
+      const dropdownArray = [...document.querySelectorAll('li')];
+      let selectedColor = '';
+      dropdown.classList.add('open');
+      inputField.focus();
+
+      let valueArray = [];
+      dropdownArray.forEach(item => {
+        valueArray.push(item.textContent);
+      });
+
+      const closeDropdown = () => {
+        dropdown.classList.remove('open');
+      }
+
+      inputField.addEventListener('input', () => {
+        dropdown.classList.add('open');
+        let inputValue = inputField.value.toLowerCase();
+        if (inputValue.length > 0) {
+          for (let j = 0; j < valueArray.length; j++) {
+            if (!(inputValue.substring(0, inputValue.length) === valueArray[j].substring(0, inputValue.length).toLowerCase())) {
+              dropdownArray[j].classList.add('closed');
+            } else {
+              dropdownArray[j].classList.remove('closed');
+            }
+          }
+        } else {
+          for (let i = 0; i < dropdownArray.length; i++) {
+            dropdownArray[i].classList.remove('closed');
+          }
+        }
+      });
+
+      dropdownArray.forEach(item => {
+        item.addEventListener('click', (evt) => {
+          inputField.value = item.textContent;
+          selectedColor = window.getComputedStyle(item).backgroundColor;
+          document.body.style.backgroundColor = selectedColor;
+          dropdownArray.forEach(dropdown => {
+            dropdown.classList.add('closed');
+          });
+        });
+      });
+
+      inputField.addEventListener('mouseover', () => {
+        inputField.style.backgroundColor = selectedColor;
+      });
+
+      inputField.addEventListener('mouseout', () => {
+        inputField.style.backgroundColor = '#FAFCFD';
+      });
+
+      inputField.addEventListener('focus', () => {
+        inputField.placeholder = 'Digite para filtrar';
+        dropdown.classList.add('open');
+        dropdownArray.forEach(dropdown => {
+          dropdown.classList.remove('closed');
+        });
+      });
+
+      inputField.addEventListener('blur', () => {
+        inputField.placeholder = 'Selecione uma cor';
+        dropdown.classList.remove('open');
+      });
+
+      document.addEventListener('click', (evt) => {
+        const isDropdown = dropdown.contains(evt.target);
+        const isInput = inputField.contains(evt.target);
+        if (!isDropdown && !isInput) {
+          dropdown.classList.remove('open');
+        }
+      });
+
+    </script>
+</body>
+
+</html>
