@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplicativo de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #a8e6a1; /* Verde pastel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            width: 100%;
+        }
+
+        .form {
+            width: 80%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form input {
+            width:100%;
+            height:100%;
+            color:#000;
+            font-size: 19px;
+            padding-top:25px;
+            border:none;
+            outline:none;
+        }
+
+        .form label {
+            position: absolute;
+            width:100%;
+            height:100%;
+            bottom:0px;
+            left:0%;
+            pointer-events:none;
+            border-bottom:1px solid black;
+
+        }
+
+        .form label::after {
+            content:"";
+            position:absolute;
+            width:100%;
+            height:100%;
+            border-bottom:3px solid #4caf50;
+            bottom:-1px;
+            left:0px;
+            transform:translateX(-100%);
+            transition:all 0.3s ease;
+        }
+
+        .content-name {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+
+        .form input:focus + .label-name .content-name,
+        .form input:valid + .label-name .content-name {
+            transform: translateY(-150%);
+            font-size: 12px;
+            color: #4caf50;
+        }
+
+        .form input:focus + .label-name::after,
+        .form input:valid + .label-name::after {
+            transform: translateX(0%);
+        }
+
+        .add-btn {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .add-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.1); /* Efeito de aumento ao passar o mouse */
+        }
+
+        .add-btn:active {
+            transform: scale(0.9); /* Efeito de pressionar ao clicar */
+        }
+
+        .filtros button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .filtros button:hover {
+            transform: scale(1.1);
+        }
+
+        .filtros button:active {
+            transform: scale(0.9);
+        }
+
+        .filtros button.active {
+            background-color: #388e3c;
+        }
+
+        .listaTarefas {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .tarefa {
+            display: flex;
+            align-items: center;
+            margin: 5px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .tarefa input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 3px;
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .tarefa input[type="checkbox"]:checked {
+            background-color: #4caf50;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M21 7L9 19l-5.5-5.5L5 12l4 4L19 5z"/></svg>');
+            background-size: 18px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .tarefa span {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .concluida {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        #contador {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+        <div class="input-container">
+            <div class="form">
+                <input type="text" id="novaTarefa" required autocomplete="off">
+                <label for="novaTarefa" class="label-name">
+                    <span class="content-name">Nova Tarefa</span>
+                </label>
+            </div>
+            <button class="add-btn" onclick="adicionarTarefa()">+</button>
+        </div>
+        <div class="filtros">
+            <button onclick="filtrar('todos')" class="filtro">Todos</button>
+            <button onclick="filtrar('naoConcluidos')" class="filtro">Não Concluídos</button>
+            <button onclick="filtrar('concluidos')" class="filtro">Concluídos</button>
+        </div>
+        <div id="listaTarefas"></div>
+        <p id="contador"></p>
+    </div>
+
+    <audio id="popSound" src="./button-sound.mp3" preload="auto"></audio>    
+    <audio id="checkSound" src="./check-sound.mp3" preload="auto"></audio>    
+ 
+    <script>
+        const listaTarefas = document.getElementById('listaTarefas');
+        const novaTarefaInput = document.getElementById('novaTarefa');
+        const contador = document.getElementById('contador');
+        const botoesFiltro = document.querySelectorAll('.filtro');
+        const popSound = document.getElementById('popSound');
+        const checkSound = document.getElementById('checkSound'); // Som ao checar
+
+        let tarefas = [];
+        let filtroAtivo = 'todos'; // Filtro padrão
+
+        function adicionarTarefa() {
+            if (novaTarefaInput.value.trim() === '') return; // Impede tarefas vazias
+            const novaTarefa = {
+                texto: novaTarefaInput.value,
+                concluida: false
+            };
+            tarefas.push(novaTarefa);
+            renderizarTarefas();
+            novaTarefaInput.value = '';
+            popSound.play(); // Toca o som de "pop"
+        }
+
+        function renderizarTarefas() {
+            listaTarefas.innerHTML = '';
+            let concluidas = 0;
+
+            // Calcula o total de tarefas e concluídas (independente do filtro)
+            tarefas.forEach(tarefa => {
+                if (tarefa.concluida) {
+                    concluidas++;
+                }
+            });
+
+            const tarefasFiltradas = tarefas.filter(tarefa => {
+                if (filtroAtivo === 'todos') return true;
+                if (filtroAtivo === 'naoConcluidos') return !tarefa.concluida;
+                if (filtroAtivo === 'concluidos') return tarefa.concluida;
+            });
+
+            tarefasFiltradas.forEach(tarefa => {
+                const li = document.createElement('li');
+                li.classList.add('tarefa');
+                if (tarefa.concluida) {
+                    li.classList.add('concluida');
+                }
+                li.innerHTML = `
+                    <input type="checkbox" ${tarefa.concluida ? 'checked' : ''}>
+                    <span>${tarefa.texto}</span>
+                `;
+                li.querySelector('input').addEventListener('change', (event) => {
+                    if (!tarefa.concluida && event.target.checked) {
+                        checkSound.play(); // Toca o som de "check" ao marcar
+                    }
+                    tarefa.concluida = event.target.checked;
+                    renderizarTarefas();
+                });
+                li.querySelector('span').addEventListener('click', () => {
+                    if (!tarefa.concluida) {
+                        checkSound.play(); // Toca o som de "check" ao clicar no nome para marcar
+                    }
+                    tarefa.concluida = !tarefa.concluida;
+                    renderizarTarefas();
+                });
+                listaTarefas.appendChild(li);
+            });
+
+            // Atualiza o contador de tarefas (não depende do filtro)
+            contador.textContent = `Total: ${tarefas.length} de ${concluidas} concluídas`;
+        }
+
+        function filtrar(filtro) {
+            filtroAtivo = filtro;
+            botoesFiltro.forEach(botao => botao.classList.remove('active'));
+            document.querySelector(`[onclick="filtrar('${filtro}')"]`).classList.add('active');
+            renderizarTarefas();
+        }
+
+    </script>
+</body>
+</html>

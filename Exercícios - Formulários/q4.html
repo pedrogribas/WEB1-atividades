@@ -1,216 +1,388 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cafeteria</title>
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: #e6ccb2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cafeteria</title>
-  <style>
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: #e6ccb2;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+      .escolha {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        justify-content: space-between;
+      }
+      .escolhaDiv {
+        width: 140px;
+        justify-content: center;
+      }
+      .escolhaImagem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+      }
+      .imagem {
+        width: 50px;
+        border-radius: 16px;
+        height: 50px;
+      }
+      .imagem.selected {
+        border: 2px solid #964b00;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
 
-    .escolha {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+      #pedido-form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        width: 80%;
+        max-width: 500px;
+      }
 
-    #pedido-form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      width: 80%;
-      max-width: 500px;
-    }
+      #torra-div {
+        display: none;
+      }
 
-    #torra-div {
-      display: none;
-    }
-
-    #fazer-pedido {
-      background-color: #964B00;
-      color: #fff;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    #fazer-pedido:hover {
-      background-color: #786C3B;
-    }
-
-    #pedido-concluido {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      display: none;
-      z-index: 1;
-    }
-
-    input[type="radio"],
-    input[type="checkbox"] {
-      margin-right: 5px;
-      border: 2px solid #964B00;
-      border-radius: 5px;
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      transition: background-color 0.3s ease;
-    }
-
-    input[type="radio"]:checked,
-    input[type="checkbox"]:checked {
-      background-color: #964B00;
-    }
-
-    label {
-      font-weight: 500;
-      cursor: pointer;
-      display: block;
-    }
-
-    input[type="radio"],
-    input[type="checkbox"] {
-      &::after {
-        content: '';
-        display: block;
-        width: 16px;
-        height: 16px;
-        border: 2px solid #fff;
-        border-radius: 3px;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        background-color: transparent;
+      #fazer-pedido {
+        background-color: #964b00;
+        color: #fff;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
         transition: background-color 0.3s ease;
       }
 
-      &:checked::after {
+      #fazer-pedido:hover {
+        background-color: #786c3b;
+      }
+      #popup-message{
+        text-align: start;
+      }
+      #pedido-concluido {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        display: none;
+        z-index: 1;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <h1>Cafeteria</h1>
-  <form id="pedido-form">
-    <div class="form-group">
-      <label for="bebida">Selecione a bebida:</label>
-      <div class="escolha">
-        <div class="escolha"><input type="radio" id="cafe" name="bebida" value="cafe">
-          <label for="cafe">Café</label>
-        </div>
+      input[type="radio"],
+      input[type="checkbox"] {
+        margin: 0 5px 0 0;
+        border: 2px solid #964b00;
+        border-radius: 5px;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="radio"]:checked,
+      input[type="checkbox"]:checked {
+        background-color: #964b00;
+      }
+
+      label {
+        font-weight: 500;
+        cursor: pointer;
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Cafeteria</h1>
+    <form id="pedido-form">
+      <div class="form-group">
+        <label for="bebida">Selecione a bebida:</label>
         <div class="escolha">
-          <input type="radio" id="cafe-com-leite" name="bebida" value="cafe-com-leite">
-          <label for="cafe-com-leite">Café com Leite</label>
-        </div>
-        <div>
-          <div class="escolha">
-            <input type="radio" id="chocolate" name="bebida" value="chocolate">
-            <label for="chocolate">Chocolate</label>
+          <div class="escolhaImagem">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/8230/8230211.png"
+              class="imagem"
+              data-checkbox-id="cafe"
+            />
+            <div class="escolha escolhaDiv">
+              <input type="radio" id="cafe" name="bebida" value="cafe" />
+              <label for="cafe">Café</label>
+            </div>
+          </div>
+          <div class="escolha escolhaDiv">
+            <div class="escolhaImagem">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/190/190964.png"
+                class="imagem"
+                data-checkbox-id="cafe-com-leite"
+              />
+              <input
+                type="radio"
+                id="cafe-com-leite"
+                name="bebida"
+                value="cafe-com-leite"
+              />
+              <label for="cafe-com-leite">Café com Leite</label>
+            </div>
+          </div>
+          <div>
+            <div class="escolha escolhaDiv">
+              <div class="escolhaImagem">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/119/119223.png"
+                  class="imagem"
+                  data-checkbox-id="chocolate"
+                />
+                <input
+                  type="radio"
+                  id="chocolate"
+                  name="bebida"
+                  value="chocolate"
+                />
+                <label for="chocolate">Chocolate</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-
-      <div id="torra-div">
-        <label for="torra">Selecione a torra do café:</label>
-        <div class="escolha">
+      <div class="form-group">
+        <div id="torra-div">
+          <label for="torra">Selecione a torra do café:</label>
           <div class="escolha">
-            <input type="radio" id="leve" name="torra" value="leve">
-            <label for="leve">Leve</label>
-          </div>
-          <div class="escolha">
-            <input type="radio" id="media" name="torra" value="media">
-            <label for="media">Média</label>
-          </div>
-          <div class="escolha">
-            <input type="radio" id="forte" name="torra" value="forte">
-            <label for="forte">Forte</label>
+            <div class="escolha escolhaDiv">
+              <input type="radio" id="leve" name="torra" value="leve" />
+              <label for="leve">Leve</label>
+            </div>
+            <div class="escolha escolhaDiv">
+              <input type="radio" id="media" name="torra" value="media" />
+              <label for="media">Médio</label>
+            </div>
+            <div class="escolha escolhaDiv">
+              <input type="radio" id="forte" name="torra" value="forte" />
+              <label for="forte">Forte</label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="form-group">
-
-      <label for="acompanhamento">Selecione o acompanhamento:</label>
-      <div class="escolha">
+      <div class="form-group">
+        <label for="acompanhamento">Selecione os acompanhamentos (opcional):</label>
         <div class="escolha">
-          <input type="checkbox" id="chocolate-acompanhamento" name="acompanhamento" value="chocolate">
-          <label for="chocolate-acompanhamento">Chocolate</label>
-        </div>
-        <div class="escolha">
-          <input type="checkbox" id="chantily-acompanhamento" name="acompanhamento" value="chantily">
-          <label for="chantily-acompanhamento">Chantily</label>
-        </div>
-        <div class="escolha">
-          <input type="checkbox" id="ovomaltine-acompanhamento" name="acompanhamento" value="ovomaltine">
-          <label for="ovomaltine-acompanhamento">Ovomaltine</label>
+          <div class="escolha escolhaDiv">
+            <input
+              type="checkbox"
+              id="chocolate-acompanhamento"
+              name="acompanhamento"
+              value="chocolate"
+            />
+            <label for="chocolate-acompanhamento">Raspas de Chocolate</label>
+          </div>
+          <div class="escolha escolhaDiv">
+            <input
+              type="checkbox"
+              id="chantily-acompanhamento"
+              name="acompanhamento"
+              value="chantily"
+            />
+            <label for="chantily-acompanhamento">Chantily</label>
+          </div>
+          <div class="escolha escolhaDiv">
+            <input
+              type="checkbox"
+              id="ovomaltine-acompanhamento"
+              name="acompanhamento"
+              value="ovomaltine"
+            />
+            <label for="ovomaltine-acompanhamento">Ovomaltine</label>
+          </div>
         </div>
       </div>
+      <button id="fazer-pedido">Fazer Pedido</button>
+    </form>
+
+    <div id="pedido-concluido">
+      <h2>Pedido Concluído!</h2>
+      <div id="popup-message">
+        
+      <p>Você escolheu: </p>
+      <p id="pedido-info"></p>
+      <p>Em breve o atendente irá à sua mesa com seu pedido! </p>
     </div>
-    <button id="fazer-pedido">Fazer Pedido</button>
-  </form>
+    </div>
 
-  <div id="pedido-concluido">
-    <h2>Pedido Concluído!</h2>
-    <p> Você escolheu: <span id="pedido-info"></span></p>
-  </div>
-
-  <script>
-    const form = document.getElementById('pedido-form');
-    const torraDiv = document.getElementById('torra-div');
-    const fazerPedidoButton = document.getElementById('fazer-pedido');
-    const pedidoConcluidoDiv = document.getElementById('pedido-concluido');
-    const pedidoInfoSpan = document.getElementById('pedido-info');
-
-    form.addEventListener('change', () => {
-      const bebida = document.querySelector('input[name="bebida"]:checked').value;
-      if (bebida === 'chocolate') {
-        torraDiv.style.display = 'none';
-      } else {
-        torraDiv.style.display = 'block';
+    <script>
+      const form = document.getElementById("pedido-form");
+      const torraDiv = document.getElementById("torra-div");
+      const fazerPedidoButton = document.getElementById("fazer-pedido");
+      const pedidoConcluidoDiv = document.getElementById("pedido-concluido");
+      const pedidoInfoSpan = document.getElementById("pedido-info");
+    
+      const imagemElements = document.querySelectorAll(".imagem");
+      const checkboxElements = document.querySelectorAll('input[name="bebida"]');
+    
+      // Função para lidar com a seleção de bebidas
+      function handleBebidaSelection() {
+        imagemElements.forEach((imagem) => {
+          imagem.addEventListener("click", (e) => {
+            const checkboxId = imagem.getAttribute("data-checkbox-id");
+            const checkbox = document.getElementById(checkboxId);
+      
+            // Desmarcar todos os outros itens
+            checkboxElements.forEach((otherCheckbox) => {
+              otherCheckbox.checked = false;
+              const otherImagemId = otherCheckbox.id;
+              const otherImagem = document.querySelector(
+                `.imagem[data-checkbox-id="${otherImagemId}"]`
+              );
+              otherImagem.classList.remove("selected");
+            });
+      
+            // Marcar o item atual
+            checkbox.checked = true;
+            imagem.classList.add("selected");
+      
+            // Exibir o tipo de torra
+            const bebida = checkbox.value;
+            if (bebida === "cafe" || bebida === "cafe-com-leite") {
+              torraDiv.style.display = "block";
+            } else {
+              torraDiv.style.display = "none";
+            }
+          });
+        });
+      
+        checkboxElements.forEach((checkbox) => {
+          checkbox.addEventListener("click", (e) => {
+            // Desmarcar todos os outros itens
+            checkboxElements.forEach((otherCheckbox) => {
+              if (otherCheckbox !== checkbox) {
+                otherCheckbox.checked = false;
+                const otherImagemId = otherCheckbox.id;
+                const otherImagem = document.querySelector(
+                  `.imagem[data-checkbox-id="${otherImagemId}"]`
+                );
+                otherImagem.classList.remove("selected");
+              }
+            });
+      
+            // Marcar o item atual
+            const imagemId = checkbox.id;
+            const imagem = document.querySelector(
+              `.imagem[data-checkbox-id="${imagemId}"]`
+            );
+            imagem.classList.add("selected");
+      
+            // Exibir o tipo de torra
+            const bebida = checkbox.value;
+            if (bebida === "cafe" || bebida === "cafe-com-leite") {
+              torraDiv.style.display = "block";
+            } else {
+              torraDiv.style.display = "none";
+            }
+          });
+        });
       }
-    });
-
-    fazerPedidoButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const bebida = document.querySelector('input[name="bebida"]:checked').value;
-      const torra = document.querySelector('input[name="torra"]:checked').value;
-      const acompanhamento = Array.from(document.querySelectorAll('input[name="acompanhamento"]:checked')).map((input) => input.value);
-      const pedido = `${bebida} ${torra ? torra : ''} ${acompanhamento.join(', ')}`;
-      pedidoInfoSpan.textContent = pedido;
-      document.getElementById('pedido-concluido').style.display = 'block';
-    });
-
-    document.addEventListener('click', (e) => {
-      if (e.target !== pedidoConcluidoDiv && !pedidoConcluidoDiv.contains(e.target)) {
-        pedidoConcluidoDiv.style.display = 'none';
+            // Função para lidar com a seleção de torras
+      function handleTorraSelection() {
+        form.addEventListener("change", () => {
+          const bebida = document.querySelector('input[name="bebida"]:checked').value;
+          if (bebida === "cafe" || bebida === "cafe-com-leite") {
+            torraDiv.style.display = "block";
+          } else {
+            torraDiv.style.display = "none";
+          }
+        });
       }
-    });
-  </script>
-</body>
-
+      // Função para lidar com o envio do pedido
+      function handlePedidoSubmission() {
+        fazerPedidoButton.disabled = true; // Desabilitar o botão por padrão
+        fazerPedidoButton.style.opacity = 0.5; // Reduzir a opacidade do botão para indicar que está desabilitado
+        fazerPedidoButton.style.cursor = "not-allowed"; // Alterar o cursor para indicar que o botão está desabilitado
+      
+        form.addEventListener("change", () => {
+          const bebida = document.querySelector('input[name="bebida"]:checked');
+          const torra = document.querySelector('input[name="torra"]:checked');
+      
+          if (
+            bebida &&
+            (torra || bebida.value !== "cafe" && bebida.value !== "cafe-com-leite")
+          ) {
+            fazerPedidoButton.disabled = false; // Habilitar o botão se tudo estiver selecionado
+            fazerPedidoButton.style.opacity = 1; // Restaurar a opacidade do botão
+            fazerPedidoButton.style.cursor = "pointer"; // Restaurar o cursor do botão
+          } else {
+            fazerPedidoButton.disabled = true; // Desabilitar o botão se algo estiver faltando
+            fazerPedidoButton.style.opacity = 0.5; // Reduzir a opacidade do botão para indicar que está desabilitado
+            fazerPedidoButton.style.cursor = "not-allowed"; // Alterar o cursor para indicar que o botão está desabilitado
+          }
+        });
+      
+        fazerPedidoButton.addEventListener("click", (e) => {
+          if (!fazerPedidoButton.disabled) {
+            e.preventDefault();
+            e.stopPropagation();
+            const bebida = document.querySelector('input[name="bebida"]:checked');
+            const bebidaLabel = bebida ? bebida.nextElementSibling.textContent : null;
+            let torra = "";
+            let hasError = false;
+      
+            if (!bebida) {
+              alert("Selecione o tipo de bebida");
+              hasError = true;
+            } else {
+              if (bebida.value === "cafe" || bebida.value === "cafe-com-leite") {
+                const torraInput = document.querySelector('input[name="torra"]:checked');
+                if (!torraInput) {
+                  alert("Selecione a torra do café");
+                  hasError = true;
+                } else {
+                  torra = ` ${torraInput.nextElementSibling.textContent}`;
+                }
+              }
+            }
+      
+            if (!hasError) {
+              const acompanhamento = Array.from(
+                document.querySelectorAll('input[name="acompanhamento"]:checked')
+              ).map((input) => input.nextElementSibling.textContent);
+              const pedido = `Bebida: ${bebidaLabel} ${torra}. Acompanhamentos: ${acompanhamento.join(", ")}`;
+              pedidoInfoSpan.textContent = pedido;
+              document.getElementById("pedido-concluido").style.display = "block";
+            }
+          }
+        });
+      }         // Função para lidar com o fechamento do pedido concluído
+      function handleClosePedidoConcluido() {
+        document.addEventListener("click", (e) => {
+          if (
+            e.target !== pedidoConcluidoDiv &&
+            !pedidoConcluidoDiv.contains(e.target)
+          ) {
+            pedidoConcluidoDiv.style.display = "none";
+          }
+        });
+      }
+    
+      // Inicializar as funções
+      handleBebidaSelection();
+      handleTorraSelection();
+      handlePedidoSubmission();
+      handleClosePedidoConcluido();
+    </script>
+  </body>
 </html>
